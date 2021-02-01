@@ -1,0 +1,30 @@
+<div class="parent" layout="column" *ngFor="let property of propertiesToRent" flex>
+    <mat-card class="md-padding" layout="row" flex>
+        <mat-card-title>
+            {{property.title}}
+        </mat-card-title>
+        <mat-card-content>
+            This property has {{property.bedRooms}} bedrooms and {{property.baths}} bathrooms.
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-flat-button>Rent This Property</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<!--div class="mbsc-grid">
+  <div class="mbsc-row mbsc-justify-content-center mbsc-no-padding">
+    <div
+      class="mbsc-col-12 mbsc-col-sm-6 mbsc-col-lg-4 mbsc-col-xl-3"
+      *ngFor="let property of propertiesToRent"
+    >
+      <mbsc-card>
+        <img [src]="property.img" draggable="false" />
+        <mbsc-card-content>
+          <mbsc-card-title>Rent this Property</mbsc-card-title>
+          <p class="mbsc-txt-muted">Bedrooms {{ property.bedRooms }}</p>
+        </mbsc-card-content>
+      </mbsc-card>
+    </div>
+  </div>
+</div-->
