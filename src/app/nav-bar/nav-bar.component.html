@@ -1,9 +1,8 @@
-<header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3"
+<nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark indigo border-bottom box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Rental Hub</a>
+      <a class="navbar-brand" [routerLink]="['']">Rental Hub</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,17 +18,37 @@
         class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item"
+        <ul class="navbar-nav flex-grow headerNav">
+          <!--li class="nav-item active" *ngIf='service.loggedIn();'
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link" [routerLink]="['/home']">Home</a>
+          </!li-->
+          <li class="nav-item active dropdown" *ngIf='service.loggedIn();' dropdown>
+            <a class="nav-link" dropdownToggle>Welcome {{service.userName}}</a>
+            <div class="dropdown-menu dropdown-menu-right"
+                     *dropdownMenu>
+                    <a class="dropdown-item"
+                       [routerLink]="['reset-password']"
+                       routerLinkActive="active"><i class="fas fa-key"></i> Reset Password</a>
+                    <a class="dropdown-item"
+                       [routerLink]="['employer-edit']"
+                       routerLinkActive="active"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                    <a class="dropdown-item"
+                       (click)="logout();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/user-profile']">Profile</a>
+          <li class="nav-item active" *ngIf='!service.loggedIn();'
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" [routerLink]="['/login']">Login</a>
+          </li>
+          <li class="nav-item active" *ngIf='!service.loggedIn();'
+              [routerLinkActive]="['link-active']">
+            <a class="nav-link" [routerLink]="['/register']">Register</a>
+
           </li>
         </ul>
       </div>
     </div>
   </nav>
-</header>

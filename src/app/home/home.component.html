@@ -1,5 +1,24 @@
-<div class="parent" layout="column" *ngFor="let property of propertiesToRent" flex>
-    <mat-card class="md-padding" layout="row" flex>
+<div class="container" *ngIf='!service.loggedIn();'>
+  <div class="row home-main-row">
+    <div class="col-md-6 mt-4 pt-5 pl-5">
+        <h2>Welcome to Rental Hub</h2>
+        <p>This hub will help renter and rentee to find the appropriate services</p>
+        <a [routerLink]="['register']"
+           routerLinkActive="router-link-active"
+           class="btn btn-info">Create An Account<i class="fas fa-user-plus"></i></a>
+        <a [routerLink]="['login']"
+           routerLinkActive="router-link-active"
+           class="btn btn-info">Already A Memeber, Login<i class="fas fa-user-plus"></i></a>
+    </div>
+    <div class="col-md-6 mt-4 home-image-wrapper">
+        <img src="assets/img/rental-property.jpg"
+             alt="">
+    </div>
+</div>
+</div>
+<div *ngIf='service.loggedIn();' >
+  <div class="parent" layout="column" *ngFor="let property of propertiesToRent" flex>
+    <mat-card class="md-padding property-card" layout="row" flex>
         <mat-card-title>
             {{property.title}}
         </mat-card-title>
@@ -7,10 +26,12 @@
             This property has {{property.bedRooms}} bedrooms and {{property.baths}} bathrooms.
         </mat-card-content>
         <mat-card-actions align="end">
-            <button mat-flat-button>Rent This Property</button>
+            <button mat-flat-button class="rent-button">Rent This Property</button>
         </mat-card-actions>
     </mat-card>
+  </div>
 </div>
+
 
 <!--div class="mbsc-grid">
   <div class="mbsc-row mbsc-justify-content-center mbsc-no-padding">

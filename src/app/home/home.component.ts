@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   public propertiesToRent: Property[] = [];
-  constructor(private service: SharedService) { }
+  constructor(public service: SharedService) { }
 
   ngOnInit(): void {
     this.refreshPropertyList();
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
   refreshPropertyList = (): void => {
     this.service.getPropertyList().subscribe(result => {
-      this.propertiesToRent = result;
+      this.propertiesToRent = result.filter(property => property.available === true);
       console.log(this.propertiesToRent);
     }, error => console.error(error));
   }
