@@ -1,1 +1,6 @@
-<p>user-profile works!</p>
+<div class="container"  *ngIf='service.loggedIn();'>
+  <button class="btn btn-info">Edit Profile</button>
+  <div>
+    <h1>Name: {{profile?.firstName}} {{profile?.lastName}}</h1>
+  </div>
+</div>

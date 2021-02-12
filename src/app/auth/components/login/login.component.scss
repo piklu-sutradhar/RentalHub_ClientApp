@@ -1,0 +1,15 @@
+.form-control.ng-touched.ng-invalid {
+  border:1px solid red;
+ }
+ .form-control.ng-touched.ng-valid {
+  border:1px solid green;
+ }
+.loginForm {
+  background-color: darkslateblue;
+  color: azure;
+}
+a:link {
+  color: azure;
+  background-color: transparent;
+  text-decoration: none;
+}

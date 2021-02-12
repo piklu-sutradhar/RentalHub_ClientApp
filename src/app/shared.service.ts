@@ -45,10 +45,15 @@ export class SharedService {
           this.decodedToken = this.helper.decodeToken(user.token);
           this.userName = user.user.normalizedUserName;
           localStorage.setItem('currentUser', user.user.normalizedUserName);
+          localStorage.setItem('userId', user.user.id);
           console.log(this.decodedToken);
         }
       })
     );
+  }
+
+  getProfile(userId: any): Observable<any> {
+    return this.http.get<any>(this.BaseURL + 'Profiles/GetProfile?userId=' + userId, httpOptions)
   }
 
   loggedIn(): boolean{
@@ -59,4 +64,5 @@ export class SharedService {
   register(model: any): Observable<any> {
     return this.http.post(this.AuthUrl + 'Register', model);
   }
+
 }

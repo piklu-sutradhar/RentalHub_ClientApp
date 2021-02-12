@@ -12,12 +12,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshPropertyList();
+    // this.service.getPropertyList().subscribe(result => {
+    //   this.propertiesToRent = result.filter(property => property.available === true);
+    //   // console.log(this.propertiesToRent);
+    // }, error => console.error(error));
   }
 
   refreshPropertyList = (): void => {
     this.service.getPropertyList().subscribe(result => {
       this.propertiesToRent = result.filter(property => property.available === true);
-      console.log(this.propertiesToRent);
+      // console.log(this.propertiesToRent);
     }, error => console.error(error));
   }
 

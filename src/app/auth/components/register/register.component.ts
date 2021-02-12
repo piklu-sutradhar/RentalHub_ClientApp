@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { SharedService } from 'src/app/shared.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private service: SharedService) { }
+  constructor(private service: SharedService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,7 +19,10 @@ export class RegisterComponent implements OnInit {
     console.log(f.value);
     console.log(f.valid);
     const registerObserver = {
-      next: (x: any) => console.log('user created'),
+      next: (x: any) => {
+        console.log('user created');
+        this.router.navigate(['/login']);
+      },
       error: (err: any) => console.log(err)
     };
     this.service.register(f.value).subscribe(registerObserver);
