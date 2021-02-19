@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     const token = localStorage.getItem('token') ?? '';
     this.service.decodedToken = this.helper.decodeToken(token);
-    this.service.userName = localStorage.getItem('currentUser');
+    this.service.userName = this.service.decodedToken?.unique_name.toUpperCase();
+    this.service.role = this.service.decodedToken?.role;
   }
 }

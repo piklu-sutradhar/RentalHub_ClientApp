@@ -32,6 +32,16 @@
             id="registerPassword" placeholder="Enter password">
             <small *ngIf="passWord.invalid && passWord.touched" class="text-danger">Password is Required</small>
         </div>
+        <div class="from-group">
+          <label for="userType" class="form-label">Register As: </label>
+          <select  type="userType" name="usertype" ngModel required #userType='ngModel' class="form-control"
+          id="userType">
+            <option value="" disabled>I am a:</option>
+            <option *ngFor="let userType of UserTypes" [ngValue]="userType">{{userType}}</option>
+            <small *ngIf="userType.invalid" class="text-danger">User Type is Required</small>
+         </select>
+        </div>
+
         <div class="form-group form-check">
           <a [routerLink]="['/login']" >Already have an Account! Login</a>
           |

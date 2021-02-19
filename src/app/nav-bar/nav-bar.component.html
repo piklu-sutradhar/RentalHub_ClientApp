@@ -21,30 +21,30 @@
         <ul class="navbar-nav flex-grow headerNav">
           <li class="nav-item active" *ngIf='service.loggedIn();'
               [routerLinkActive]="['link-active']">
-            <a class="nav-link" [routerLink]="['/user-profile']">Profile</a>
+            <a class="nav-link" [routerLink]="['/user-profile']"><i class="fa fa-user"></i> Profile</a>
           </li>
           <li class="nav-item active dropdown" *ngIf='service.loggedIn();' dropdown>
-            <a class="nav-link" dropdownToggle>Welcome {{service.userName}}</a>
+            <a class="nav-link" dropdownToggle>Welcome {{service.userName}} <i class="fa fa-caret-down"></i></a>
             <div class="dropdown-menu dropdown-menu-right"
                      *dropdownMenu>
                     <a class="dropdown-item"
                        [routerLink]="['reset-password']"
-                       routerLinkActive="active"><i class="fas fa-key"></i> Reset Password</a>
+                       routerLinkActive="active"><i class="fa fa-key"></i> Reset Password</a>
                     <a class="dropdown-item"
                        [routerLink]="['employer-edit']"
-                       routerLinkActive="active"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                       routerLinkActive="active"><i class="fa fa-user"></i> Edit Profile</a>
                     <a class="dropdown-item"
-                       (click)="logout();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                       (click)="logout();"><i class="fa fa-sign-out"></i> Logout</a>
                 </div>
           </li>
           <li class="nav-item active" *ngIf='!service.loggedIn();'
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link" [routerLink]="['/login']">Login</a>
+            <a class="nav-link" [routerLink]="['/login']">Login <i class="fa fa-sign-in"></i></a>
           </li>
           <li class="nav-item active" *ngIf='!service.loggedIn();'
               [routerLinkActive]="['link-active']">
-            <a class="nav-link" [routerLink]="['/register']">Register</a>
+            <a class="nav-link" [routerLink]="['/register']">Register <i class="fa fa-user-plus"></i></a>
 
           </li>
         </ul>

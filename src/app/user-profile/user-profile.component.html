@@ -1,6 +1,67 @@
-<div class="container"  *ngIf='service.loggedIn();'>
-  <button class="btn btn-info">Edit Profile</button>
-  <div>
-    <h1>Name: {{profile?.firstName}} {{profile?.lastName}}</h1>
-  </div>
+<div class="container main-div"  *ngIf='service.loggedIn();'>
+  <mat-card class="card">
+    <mat-card-header>
+        <div mat-card-avatar>
+          <i class="fa fa-user"></i>
+        </div>
+        <mat-card-title>{{profile?.firstName}} {{profile?.lastName}}</mat-card-title>
+        <mat-card-subtitle style="color: azure;">{{profile?.user?.email}}</mat-card-subtitle>
+        <mat-card-subtitle style="color: azure;">{{service.role}}</mat-card-subtitle>
+        <mat-card-actions>
+          <button mat-button (click)="openModal(content)"><i class="fa fa-edit"></i></button>
+        </mat-card-actions>
+    </mat-card-header>
+    <mat-card-content>
+        <p>Username: {{profile?.user?.userName}}</p>
+        <p>Address: {{profile?.address}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="deleteProfile()"> Delete Profile <i class="fa fa-user-minus"></i></button>
+    </mat-card-actions>
+</mat-card>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+        <h1 class="text-center pt-3">Sign Up</h1>
+        <form >
+          <div class="form-group">
+            <label for="registerFirstName" class="form-label">First Name</label>
+            <input type="text" name="firstname" ngModel required pattern='^[a-zA-Z]+$'  class="form-control" id="registerFirstName"
+              placeholder="Enter First Name">
+              <small class="text-danger">First Name is Required</small>
+          </div>
+          <div class="form-group">
+            <label for="registerLastName" class="form-label">Last Name</label>
+            <input type="text" name="lastname" ngModel required pattern='^[a-zA-Z]+$'  class="form-control" id="registerLastName"
+              placeholder="Enter Last Name">
+              <small class="text-danger">Last Name is Required</small>
+          </div>
+          <div class="form-group">
+            <label for="registerUserName" class="form-label">User Name</label>
+            <input type="text" name="username" ngModel required pattern='^[a-zA-Z]+$' class="form-control" id="registerUserName"
+              placeholder="Enter User Name">
+            <small  class="text-danger">User Name is Required</small>
+          </div>
+          <div class="mb-3">
+            <label for="registerEmailAddress" class="form-label">Email address</label>
+            <input type="email" name='email' ngModel required email  class="form-control" id="registerEmailAddress" aria-describedby="emailHelp" placeholder="Enter your email address">
+            <small  class="text-danger">Email is Required</small>
+          </div>
+          <div class="form-group">
+            <label for="registerPassword" class="form-label">Password</label>
+            <input type="password" name="passWord" ngModel required  class="form-control"
+              id="registerPassword" placeholder="Enter password">
+              <small  class="text-danger">Password is Required</small>
+          </div>
+        </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+

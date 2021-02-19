@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { SharedService } from './../shared.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   public propertiesToRent: Property[] = [];
-  constructor(public service: SharedService) { }
+  constructor(public service: SharedService, public router: Router) { }
 
   ngOnInit(): void {
-    this.refreshPropertyList();
+    if (this.service.isRenter())
+    {
+      this.router.navigate(['/renter-home']);
+    }
+    else
+    {
+      this.refreshPropertyList();
+    }
     // this.service.getPropertyList().subscribe(result => {
     //   this.propertiesToRent = result.filter(property => property.available === true);
     //   // console.log(this.propertiesToRent);
@@ -19,12 +27,12 @@ export class HomeComponent implements OnInit {
   }
 
   refreshPropertyList = (): void => {
+    const role = this.service.role;
     this.service.getPropertyList().subscribe(result => {
       this.propertiesToRent = result.filter(property => property.available === true);
       // console.log(this.propertiesToRent);
     }, error => console.error(error));
   }
-
 }
 
 interface Property {

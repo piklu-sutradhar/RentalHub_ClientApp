@@ -9,7 +9,7 @@ import { SharedService } from 'src/app/shared.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  public UserTypes = ['Renter', 'Rentee'];
   constructor(private service: SharedService, private router: Router) { }
 
   ngOnInit(): void {

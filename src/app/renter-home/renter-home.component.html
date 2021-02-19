@@ -1,0 +1,91 @@
+<div class="container" *ngIf='!service.loggedIn();'>
+  <div class="row home-main-row">
+    <div class="col-md-6 mt-4 pt-5 pl-5">
+        <h2>Welcome to Rental Hub</h2>
+        <p>This hub will help renter and rentee to find the appropriate services</p>
+        <a [routerLink]="['register']"
+           routerLinkActive="router-link-active"
+           class="btn btn-info">Create An Account <i class="fa fa-user-plus"></i></a>
+        <a [routerLink]="['login']"
+           routerLinkActive="router-link-active"
+           class="btn btn-info">Already A Memeber, Login <i class="fa fa-sign-in"></i></a>
+    </div>
+    <div class="col-md-6 mt-4 home-image-wrapper">
+        <img src="assets/img/rental-property.jpg"
+             alt="">
+    </div>
+  </div>
+</div>
+
+<div *ngIf='service.loggedIn() && service.isRenter();' >
+  <div class="parent" layout="column" *ngFor="let property of properties" flex>
+    <mat-card class="md-padding property-card" layout="row" flex>
+        <mat-card-title>
+            {{property.title}}
+        </mat-card-title>
+        <mat-card-content>
+            This property has {{property.bedRooms}} bedrooms and {{property.baths}} bathrooms.
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-flat-button class="remove-property-button" (click) = 'removeProperty(property.id)'>Remove This Property <i style="color: red;" class="fa fa-trash"></i></button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <button  mat-flat-button class="add-property-button" (click)="openModal(content)">Add Property</button>
+</div>
+
+
+<ng-template #content let-modal class="add-property-modal mt-5">
+  <div class="modal-header text-center pt-3">
+    <h1 class="text-center modal-title" id="modal-basic-title">Add a new property</h1>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    <div >
+      <div class="shadow round p-3 registrationForm">
+        <form #f='ngForm' (ngSubmit)='onSubmit(f)'>
+          <div class="form-group">
+            <label for="registerTitle" class="form-label">Title</label>
+            <input type="text" name="title" ngModel required pattern='^[a-zA-Z]+$' #title='ngModel' class="form-control" id="registerTitle"
+              placeholder="Enter Last Name">
+              <small *ngIf="title.invalid && title.touched" class="text-danger">Title is Required</small>
+          </div>
+          <div class="from-group pb-3">
+            <label for="type" class="form-label">Property Type </label>
+            <select  type="type" name="type" ngModel required #type='ngModel' class="form-control"
+            id="type">
+              <option value="" disabled>Select Property Type:</option>
+              <option *ngFor="let type of types" [ngValue]="type">{{type}}</option>
+              <small *ngIf="type.invalid" class="text-danger">User Type is Required</small>
+           </select>
+          </div>
+          <div class="form-group">
+            <label for="bedRooms" class="form-label">How many Bedrooms?</label>
+            <input type="number" min="1" max="5" name="bedRooms" ngModel required pattern='^[0-9]+$' #bedRooms='ngModel' class="form-control" id="registerBedRooms"
+              placeholder="Enter bedroom numbers">
+              <small *ngIf="bedRooms.invalid && bedRooms.touched" class="text-danger">Number of bedrooms is Required</small>
+          </div>
+
+          <div class="form-group">
+            <label for="baths" class="form-label">How many Baths?</label>
+            <input type="number" min="1" max="5" name="baths" ngModel required pattern='^[0-9]+$' #baths='ngModel' class="form-control" id="registerbaths"
+              placeholder="Enter baths numbers">
+              <small *ngIf="baths.invalid && baths.touched" class="text-danger">Number of baths is Required</small>
+          </div>
+          <div class="from-group pb-3">
+            <label for="available" class="form-label">Is it Available?</label>
+            <select  type="boolen" name="available" ngModel required #available='ngModel' class="form-control"
+            id="available">
+              <option value="" disabled>Availability</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+              <small *ngIf="available.invalid" class="text-danger">Availability is Required</small>
+           </select>
+          </div>
+          <button type="submit" mat-flat-button [disabled]="f.invalid" (click)="modal.close('Save click')" class="add-button">Add Property</button>
+        </form>
+      </div>
+    </div>
+
+</ng-template>

@@ -5,18 +5,18 @@
         <p>This hub will help renter and rentee to find the appropriate services</p>
         <a [routerLink]="['register']"
            routerLinkActive="router-link-active"
-           class="btn btn-info">Create An Account<i class="fas fa-user-plus"></i></a>
+           class="btn btn-info">Create An Account <i class="fa fa-user-plus"></i></a>
         <a [routerLink]="['login']"
            routerLinkActive="router-link-active"
-           class="btn btn-info">Already A Memeber, Login<i class="fas fa-user-plus"></i></a>
+           class="btn btn-info">Already A Memeber, Login <i class="fa fa-sign-in"></i></a>
     </div>
     <div class="col-md-6 mt-4 home-image-wrapper">
         <img src="assets/img/rental-property.jpg"
              alt="">
     </div>
+  </div>
 </div>
-</div>
-<div *ngIf='service.loggedIn();' >
+<div *ngIf='service.loggedIn() && !service.isRenter();' >
   <div class="d-flex justify-content-center" *ngIf='propertiesToRent.length <= 0;'>
     <div class="spinner-border" role="status">
         <span class="sr-only" id="loading"></span>
