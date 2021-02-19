@@ -47,7 +47,7 @@
         <form #f='ngForm' (ngSubmit)='onSubmit(f)'>
           <div class="form-group">
             <label for="registerTitle" class="form-label">Title</label>
-            <input type="text" name="title" ngModel required pattern='^[a-zA-Z]+$' #title='ngModel' class="form-control" id="registerTitle"
+            <input type="text" name="title" ngModel required pattern='^[A-Za-z0-9 _]+$' #title='ngModel' class="form-control" id="registerTitle"
               placeholder="Enter Last Name">
               <small *ngIf="title.invalid && title.touched" class="text-danger">Title is Required</small>
           </div>

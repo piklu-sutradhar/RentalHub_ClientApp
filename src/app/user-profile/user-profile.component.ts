@@ -21,10 +21,6 @@ export class UserProfileComponent implements OnInit {
     const userId = this.service.decodedToken.nameid;
     this.service.getProfile(userId).subscribe(result => {
       this.profile = result;
-      if (this.profile)
-      {
-        this.profile.address = JSON.stringify(this.profile?.address);
-      }
       // console.log(this.propertiesToRent);
     }, error => console.error(error));
   }
@@ -44,6 +40,16 @@ export class UserProfileComponent implements OnInit {
     this.service.deleteProfile(this.profile?.id ?? '').subscribe(deleteObserver);
 
   }
+  onSubmit(f: NgForm): void {
+    console.log(f.value);
+    console.log(f.valid);
+    const addPropertyObserver = {
+      next: (x: any) => {
+        this.router.navigate(['/user-profile']);
+      },
+      error: (err: any) => console.log(err)
+    };
+  }
 
 }
 
@@ -51,6 +57,12 @@ interface Profile {
   id: string;
   firstName: string;
   lastName: string;
-  user: any;
-  address: any;
+  email: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  province: string;
+  country: string;
+  postalCode: string;
+  imageUrl: string;
 }

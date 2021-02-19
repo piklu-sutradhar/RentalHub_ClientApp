@@ -5,63 +5,89 @@
           <i class="fa fa-user"></i>
         </div>
         <mat-card-title>{{profile?.firstName}} {{profile?.lastName}}</mat-card-title>
-        <mat-card-subtitle style="color: azure;">{{profile?.user?.email}}</mat-card-subtitle>
+        <mat-card-subtitle style="color: azure;">{{profile?.email}}</mat-card-subtitle>
         <mat-card-subtitle style="color: azure;">{{service.role}}</mat-card-subtitle>
         <mat-card-actions>
-          <button mat-button (click)="openModal(content)"><i class="fa fa-edit"></i></button>
+
         </mat-card-actions>
     </mat-card-header>
     <mat-card-content>
-        <p>Username: {{profile?.user?.userName}}</p>
-        <p>Address: {{profile?.address}}</p>
+        <p>Road: {{profile?.addressLine1}}</p>
+        <p>Apt/Unit: {{profile?.addressLine2}}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="deleteProfile()"> Delete Profile <i class="fa fa-user-minus"></i></button>
+      <button mat-button (click)="deleteProfile()" class="profile-delete-button"> Delete Profile <i class="fa fa-trash"></i></button>
+      <button mat-button (click)="openModal(content)" class="profile-edit-button">Edit Profile <i class="fa fa-edit"></i></button>
     </mat-card-actions>
 </mat-card>
 </div>
 
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+
+<ng-template #content let-modal class="add-property-modal mt-5">
+  <div class="modal-header text-center pt-3">
+    <h1 class="text-center modal-title" id="modal-basic-title">Add a new property</h1>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-        <h1 class="text-center pt-3">Sign Up</h1>
-        <form >
+    <div >
+      <div class="shadow round p-3 registrationForm">
+        <form #f='ngForm' (ngSubmit)='onSubmit(f)'>
           <div class="form-group">
             <label for="registerFirstName" class="form-label">First Name</label>
-            <input type="text" name="firstname" ngModel required pattern='^[a-zA-Z]+$'  class="form-control" id="registerFirstName"
+            <input type="text" name="firstname" ngModel required pattern='^[a-zA-Z]+$' #firstname='ngModel' class="form-control" id="registerFirstName"
               placeholder="Enter First Name">
-              <small class="text-danger">First Name is Required</small>
+              <small *ngIf="firstname.invalid && firstname.touched" class="text-danger">First Name is Required</small>
           </div>
           <div class="form-group">
             <label for="registerLastName" class="form-label">Last Name</label>
-            <input type="text" name="lastname" ngModel required pattern='^[a-zA-Z]+$'  class="form-control" id="registerLastName"
+            <input type="text" name="lastname" ngModel required pattern='^[a-zA-Z]+$' #lastname='ngModel' class="form-control" id="registerLastName"
               placeholder="Enter Last Name">
-              <small class="text-danger">Last Name is Required</small>
+              <small *ngIf="lastname.invalid && lastname.touched" class="text-danger">Last Name is Required</small>
+          </div>
+
+          <div class="form-group">
+            <label for="addressLine1" class="form-label">Road Address</label>
+            <input type="text" name="addressLine1" ngModel required pattern='^[a-zA-Z0-9 _-]+$' #addressLine1='ngModel' class="form-control" id="registeraddressLine1"
+              placeholder="Enter Road Address">
+              <small *ngIf="addressLine1.invalid && addressLine1.touched" class="text-danger">Road Address is Required</small>
           </div>
           <div class="form-group">
-            <label for="registerUserName" class="form-label">User Name</label>
-            <input type="text" name="username" ngModel required pattern='^[a-zA-Z]+$' class="form-control" id="registerUserName"
-              placeholder="Enter User Name">
-            <small  class="text-danger">User Name is Required</small>
+            <label for="addressLine2" class="form-label">Apt/Suit</label>
+            <input type="text" name="addressLine2" ngModel pattern='^[a-zA-Z0-9 _-]+$' #addressLine2='ngModel' class="form-control" id="registeraddressLine2"
+              placeholder="Enter Apt/Suit Number">
           </div>
-          <div class="mb-3">
-            <label for="registerEmailAddress" class="form-label">Email address</label>
-            <input type="email" name='email' ngModel required email  class="form-control" id="registerEmailAddress" aria-describedby="emailHelp" placeholder="Enter your email address">
-            <small  class="text-danger">Email is Required</small>
+
+          <div class="form-group">
+            <label for="city" class="form-label">City</label>
+            <input type="text" name="city" ngModel required pattern='^[a-zA-Z]+$' #city='ngModel' class="form-control" id="registercity"
+              placeholder="Enter Your City">
+              <small *ngIf="city.invalid && city.touched" class="text-danger">City is Required</small>
           </div>
           <div class="form-group">
-            <label for="registerPassword" class="form-label">Password</label>
-            <input type="password" name="passWord" ngModel required  class="form-control"
-              id="registerPassword" placeholder="Enter password">
-              <small  class="text-danger">Password is Required</small>
+            <label for="province" class="form-label">Province</label>
+            <input type="text" name="province" ngModel required pattern='^[a-zA-Z]+$' #province='ngModel' class="form-control" id="registerprovince"
+              placeholder="Enter Your Province">
+              <small *ngIf="province.invalid && province.touched" class="text-danger">Province is Required</small>
           </div>
+
+
+          <div class="form-group">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" name="country" ngModel required pattern='^[a-zA-Z]+$' #country='ngModel' class="form-control" id="registercountry"
+              placeholder="Enter Your Country">
+              <small *ngIf="country.invalid && country.touched" class="text-danger">Country is Required</small>
+          </div>
+          <div class="form-group">
+            <label for="postalCode" class="form-label">Postal Code</label>
+            <input type="text" name="postalCode" ngModel required pattern='^[a-zA-Z]+$' #postalCode='ngModel' class="form-control" id="registerpostalCode"
+              placeholder="Enter postalCode">
+              <small *ngIf="postalCode.invalid && postalCode.touched" class="text-danger">Postal Code is Required</small>
+          </div>
+          <button type="submit" mat-flat-button [disabled]="f.invalid" (click)="modal.close('Save click')" class="edit-button">Add Property</button>
         </form>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-  </div>
+      </div>
+    </div>
+
 </ng-template>
 
