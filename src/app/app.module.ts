@@ -16,6 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RenterHomeComponent } from './renter-home/renter-home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FontAwesomeModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

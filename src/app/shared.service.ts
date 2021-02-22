@@ -68,6 +68,10 @@ export class SharedService {
     return this.http.delete<any>(this.BaseURL + 'Profiles/' + id, httpOptions);
   }
 
+  editprofile(profileId: string, modifiedProfile: any): Observable<any> {
+    return this.http.put<any>(this.BaseURL + 'Profiles/' + profileId, modifiedProfile, httpOptions);
+  }
+
   loggedIn(): boolean{
     const token = localStorage.getItem('token') ?? '';
     return !this.helper.isTokenExpired(token);

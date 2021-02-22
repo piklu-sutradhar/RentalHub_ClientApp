@@ -15,11 +15,16 @@ export class RenterHomeComponent implements OnInit {
   public renter: any;
   public properties: any = [];
   constructor(public service: SharedService, private modalService: NgbModal, public router: Router) {
-    this.userId = this.service.decodedToken.nameid;
+    this.userId = this.service.decodedToken?.nameid;
   }
 
   ngOnInit(): void {
-    this.refreshPropertyList();
+    if (!this.service.loggedIn()){
+      this.router.navigate(['home']);
+    }
+    else{
+      this.refreshPropertyList();
+    }
   }
 
   refreshPropertyList = (): void => {
@@ -42,9 +47,8 @@ export class RenterHomeComponent implements OnInit {
   removeProperty(propertyId: string): void {
     const removePropertyObserver = {
       next: (x: any) => {
-        console.log('Profile Deleted'),
-        this.service.logout();
         this.router.navigate(['/renter-home']);
+        this.refreshPropertyList();
       },
       error: (err: any) => console.log(err)
     };
@@ -57,6 +61,7 @@ export class RenterHomeComponent implements OnInit {
     const addPropertyObserver = {
       next: (x: any) => {
         this.router.navigate(['renter-home']);
+        this.refreshPropertyList();
       },
       error: (err: any) => console.log(err)
     };

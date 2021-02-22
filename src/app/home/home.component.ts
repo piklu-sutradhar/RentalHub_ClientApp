@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
     {
       this.router.navigate(['/renter-home']);
     }
-    else
+    else if(this.service.loggedIn())
     {
       this.refreshPropertyList();
     }

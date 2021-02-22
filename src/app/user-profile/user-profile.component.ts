@@ -15,7 +15,12 @@ export class UserProfileComponent implements OnInit {
   constructor(public service: SharedService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
-    this.refreshProfile();
+    if (!this.service.loggedIn()){
+      this.router.navigate(['home']);
+    }
+    else{
+      this.refreshProfile();
+    }
   }
   refreshProfile = (): void => {
     const userId = this.service.decodedToken.nameid;
@@ -46,9 +51,12 @@ export class UserProfileComponent implements OnInit {
     const addPropertyObserver = {
       next: (x: any) => {
         this.router.navigate(['/user-profile']);
+        this.refreshProfile();
       },
       error: (err: any) => console.log(err)
     };
+
+    this.service.editprofile(this.profile?.id ?? '', f.value).subscribe(addPropertyObserver);
   }
 
 }

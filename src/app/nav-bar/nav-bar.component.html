@@ -19,20 +19,18 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow headerNav">
-          <li class="nav-item active" *ngIf='service.loggedIn();'
+          <!--li class="nav-item active" *ngIf='service.loggedIn();'
               [routerLinkActive]="['link-active']">
             <a class="nav-link" [routerLink]="['/user-profile']"><i class="fa fa-user"></i> Profile</a>
-          </li>
+          </li-->
           <li class="nav-item active dropdown" *ngIf='service.loggedIn();' dropdown>
             <a class="nav-link" dropdownToggle>Welcome {{service.userName}} <i class="fa fa-caret-down"></i></a>
             <div class="dropdown-menu dropdown-menu-right"
                      *dropdownMenu>
                     <a class="dropdown-item"
-                       [routerLink]="['reset-password']"
-                       routerLinkActive="active"><i class="fa fa-key"></i> Reset Password</a>
+                       [routerLink]="['reset-password']" ><i class="fa fa-key"></i> Reset Password</a>
                     <a class="dropdown-item"
-                       [routerLink]="['employer-edit']"
-                       routerLinkActive="active"><i class="fa fa-user"></i> Edit Profile</a>
+                       [routerLink]="['user-profile']" ><i class="fa fa-user"></i> Profile</a>
                     <a class="dropdown-item"
                        (click)="logout();"><i class="fa fa-sign-out"></i> Logout</a>
                 </div>
