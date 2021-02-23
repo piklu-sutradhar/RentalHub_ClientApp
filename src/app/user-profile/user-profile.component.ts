@@ -34,15 +34,23 @@ export class UserProfileComponent implements OnInit {
   }
 
   deleteProfile(): void {
-    const deleteObserver = {
-      next: (x: any) => {
-        console.log('Profile Deleted'),
-        this.service.logout();
-        this.router.navigate(['/home']);
-      },
-      error: (err: any) => console.log(err)
-    };
-    this.service.deleteProfile(this.profile?.id ?? '').subscribe(deleteObserver);
+    this.service.confirm('Please confirm..', 'Are you sure to delete your profile?')
+    .then((confirmed) => {
+      console.log('User confirmed:', confirmed);
+      const deleteObserver = {
+        next: (x: any) => {
+          console.log('Profile Deleted'),
+          this.service.logout();
+          this.router.navigate(['/home']);
+        },
+        error: (err: any) => console.log(err)
+      };
+      if (confirmed)
+      {
+        this.service.deleteProfile(this.profile?.id ?? '').subscribe(deleteObserver);
+      }
+    })
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 
   }
   onSubmit(f: NgForm): void {

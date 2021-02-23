@@ -4,12 +4,16 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 const httpOptions = {
   headers: new HttpHeaders({
     Authorization: 'Bearer ' + localStorage.getItem('token')
   })
 };
+
+const countries = ['United State', 'Canada'];
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +27,29 @@ export class SharedService {
   userName: null;
   role: null;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private modalService: NgbModal) { }
+
+  getCountry(): string[] {
+    return countries;
+  }
 
   getPropertyList(): Observable<any[]> {
     return this.http.get<any>(this.BaseURL + 'properties', httpOptions);
   }
+  public confirm(
+    title: string,
+    message: string,
+    btnOkText: string = 'OK',
+    btnCancelText: string = 'Cancel',
+    dialogSize: 'sm'|'lg' = 'sm'): Promise<boolean> {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, { size: dialogSize });
+    modalRef.componentInstance.title = title;
+    modalRef.componentInstance.message = message;
+    modalRef.componentInstance.btnOkText = btnOkText;
+    modalRef.componentInstance.btnCancelText = btnCancelText;
 
+    return modalRef.result;
+  }
   getRenter(userId: string): Observable<any[]> {
     return this.http.get<any>(this.BaseURL + 'renters/' + userId, httpOptions);
   }

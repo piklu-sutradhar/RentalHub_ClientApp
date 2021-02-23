@@ -31,12 +31,16 @@
   color:azure;
 }
 
-.remove-property-button {
+/*.remove-property-button {
   background-color: azure;
   border: 0cm;
   color: red;
-}
+}*/
 
+.property-list-title {
+  background-color: darkslateblue;
+  color:azure;
+}
 .modal-body {
   max-height: calc(100vh - 200px);
   overflow: auto;

@@ -3,10 +3,9 @@
     <div class="col-md-6 mt-4 pt-5 pl-5">
         <h2>Welcome to Rental Hub</h2>
         <p>This hub will help renter and rentee to find the appropriate services</p>
-        <a [routerLink]="['register']"
-           routerLinkActive="router-link-active"
+        <a [routerLink]="['/register']"
            class="btn btn-info">Create An Account <i class="fa fa-user-plus"></i></a>
-        <a [routerLink]="['login']"
+        <a [routerLink]="['/login']"
            routerLinkActive="router-link-active"
            class="btn btn-info">Already A Memeber, Login <i class="fa fa-sign-in"></i></a>
     </div>
@@ -31,11 +30,27 @@
             This property has {{property.bedRooms}} bedrooms and {{property.baths}} bathrooms.
         </mat-card-content>
         <mat-card-actions align="end">
-            <button mat-flat-button class="rent-button">Rent This Property</button>
+            <button mat-flat-button class="rent-button" (click)="openModal(content)">Rent This Property</button>
         </mat-card-actions>
     </mat-card>
   </div>
 </div>
+
+<ng-template #content let-modal class="add-property-modal mt-5">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmation.</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    Your contact info will be passed to the Renter. The Renter will contact you.
+  </div>
+  <div class="modal-footer">
+    <button mat-flat-button color="primary" (click)="modal.dismiss('Ok clicked')">OK</button>
+  </div>
+</ng-template>
+
 
 
 <!--div class="mbsc-grid">

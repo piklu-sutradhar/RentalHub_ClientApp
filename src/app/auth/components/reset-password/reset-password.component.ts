@@ -1,4 +1,7 @@
+import { Router } from '@angular/router';
+import { SharedService } from 'src/app/shared.service';
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-reset-password',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  constructor() { }
+  constructor(public service: SharedService, public router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  okClicked(): void {
+    this.router.navigate(['/home']);
   }
 
 }

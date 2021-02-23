@@ -18,6 +18,9 @@
 </div>
 
 <div *ngIf='service.loggedIn() && service.isRenter();' >
+  <div class="container mb-2  property-list-title card p-3">
+    <h1>These have {{properties?.length}} protperties:</h1>
+  </div>
   <div class="parent" layout="column" *ngFor="let property of properties" flex>
     <mat-card class="md-padding property-card" layout="row" flex>
         <mat-card-title>
@@ -125,7 +128,7 @@
           </div>
           <div class="form-group">
             <label for="postalCode" class="form-label">Postal Code<span style="color: red;" *ngIf = "postalCode.invalid">*</span></label>
-            <input type="text" name="postalCode" ngModel required pattern='^[a-zA-Z0-9 ]+$' #postalCode='ngModel' class="form-control" id="registerpostalCode"
+            <input type="text" name="postalCode" ngModel required pattern='^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$' #postalCode='ngModel' class="form-control" id="registerpostalCode"
               placeholder="Enter postalCode">
               <small *ngIf="postalCode.invalid && postalCode.touched" class="text-danger">Postal Code is Required</small>
           </div>

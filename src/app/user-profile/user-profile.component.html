@@ -7,17 +7,24 @@
         <mat-card-title>{{profile?.firstName}} {{profile?.lastName}}</mat-card-title>
         <mat-card-subtitle style="color: azure;">{{profile?.email}}</mat-card-subtitle>
         <mat-card-subtitle style="color: azure;">{{service.role}}</mat-card-subtitle>
-        <mat-card-actions>
-
-        </mat-card-actions>
     </mat-card-header>
-    <mat-card-content>
+    <div class="text-center">
+      <h1>
+        Address
+      </h1>
+      <mat-card-content>
         <p>Road: {{profile?.addressLine1}}</p>
         <p>Apt/Unit: {{profile?.addressLine2}}</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button (click)="deleteProfile()" class="profile-delete-button"> Delete Profile <i class="fa fa-trash"></i></button>
-      <button mat-button (click)="openModal(content)" class="profile-edit-button">Edit Profile <i class="fa fa-edit"></i></button>
+        <p>City: {{profile?.city}}</p>
+        <p>Province: {{profile?.province}}</p>
+        <p>Country: {{profile?.country}}</p>
+        <p>Postal Code: {{profile?.postalCode}}</p>
+      </mat-card-content>
+    </div>
+
+    <mat-card-actions class="space-between text-center">
+      <button mat-raised-button color="primary" (click)="openModal(content)" class="profile-edit-button">Edit Profile <i class="fa fa-edit"></i></button>
+      <button mat-raised-button (click)="deleteProfile()" class="profile-delete-button"> Delete Profile <i class="fa fa-trash"></i></button>
     </mat-card-actions>
 </mat-card>
 </div>
@@ -25,7 +32,7 @@
 
 <ng-template #content let-modal class="add-property-modal mt-5">
   <div class="modal-header text-center pt-3">
-    <h1 class="text-center modal-title" id="modal-basic-title">Add a new property</h1>
+    <h1 class="text-center modal-title" id="modal-basic-title">Update Your Profile</h1>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -70,7 +77,7 @@
           </div>
           <div class="form-group">
             <label for="province" class="form-label">Province</label>
-            <input type="text" name="province" ngModel required pattern='^[a-zA-Z]+$' #province='ngModel' class="form-control" id="registerprovince"
+            <input type="text" name="province" [(ngModel)]="profile!.province" required pattern='^[a-zA-Z]+$' #province='ngModel' class="form-control" id="registerprovince"
               placeholder="Enter Your Province">
               <small *ngIf="province.invalid && province.touched" class="text-danger">Province is Required</small>
           </div>
@@ -78,17 +85,17 @@
 
           <div class="form-group">
             <label for="country" class="form-label">Country</label>
-            <input type="text" name="country" [(ngModel)]="profile!.province" required pattern='^[a-zA-Z]+$' #country='ngModel' class="form-control" id="registercountry"
+            <input type="text" name="country" [(ngModel)]="profile!.country" required pattern='^[a-zA-Z]+$' #country='ngModel' class="form-control" id="registercountry"
               placeholder="Enter Your Country">
               <small *ngIf="country.invalid && country.touched" class="text-danger">Country is Required</small>
           </div>
           <div class="form-group">
             <label for="postalCode" class="form-label">Postal Code</label>
-            <input type="text" name="postalCode" [(ngModel)]="profile!.postalCode" required pattern='^[a-zA-Z0-9 ]+$' #postalCode='ngModel' class="form-control" id="registerpostalCode"
+            <input type="text" name="postalCode" [(ngModel)]="profile!.postalCode" required pattern='^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$' #postalCode='ngModel' class="form-control" id="registerpostalCode"
               placeholder="Enter postalCode">
               <small *ngIf="postalCode.invalid && postalCode.touched" class="text-danger">Postal Code is Required</small>
           </div>
-          <button type="submit" mat-flat-button [disabled]="f.invalid" (click)="modal.close('Save click')" class="edit-button">Save</button>
+          <button type="submit" style="display: block" mat-raised-button [disabled]="f.invalid" (click)="modal.close('Save click')" class="edit-button">Save</button>
         </form>
       </div>
     </div>

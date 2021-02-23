@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { SharedService } from './../shared.service';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   public propertiesToRent: Property[] = [];
-  constructor(public service: SharedService, public router: Router) { }
+  constructor(public service: SharedService, private modalService: NgbModal, public router: Router) { }
 
   ngOnInit(): void {
     if (this.service.isRenter())
@@ -32,6 +33,9 @@ export class HomeComponent implements OnInit {
       this.propertiesToRent = result.filter(property => property.available === true);
       // console.log(this.propertiesToRent);
     }, error => console.error(error));
+  }
+  openModal(content: any): void {
+    this.modalService.open(content);
   }
 }
 

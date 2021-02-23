@@ -17,14 +17,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RenterHomeComponent } from './renter-home/renter-home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     HomeComponent,
     UserProfileComponent,
-    RenterHomeComponent
+    RenterHomeComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,9 @@ import { MatIconModule } from '@angular/material/icon';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

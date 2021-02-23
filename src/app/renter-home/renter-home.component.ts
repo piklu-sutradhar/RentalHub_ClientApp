@@ -13,7 +13,8 @@ export class RenterHomeComponent implements OnInit {
   public types = ['Apertment', 'Condo', 'Townhouse', 'House'];
   private userId = '';
   public renter: any;
-  public properties: any = [];
+  public properties: any[] = [];
+  public propertytoEdit: any;
   constructor(public service: SharedService, private modalService: NgbModal, public router: Router) {
     this.userId = this.service.decodedToken?.nameid;
   }
@@ -44,15 +45,31 @@ export class RenterHomeComponent implements OnInit {
     this.modalService.open(content);
   }
 
+  openEditModal(content: any, propertyId: string): void {
+    this.propertytoEdit = this.properties.filter((p: { Id: string; }) => p?.Id === propertyId);
+    this.modalService.open(content);
+  }
+
   removeProperty(propertyId: string): void {
-    const removePropertyObserver = {
-      next: (x: any) => {
-        this.router.navigate(['/renter-home']);
-        this.refreshPropertyList();
-      },
-      error: (err: any) => console.log(err)
-    };
-    this.service.removeRenterProperty(this.renter.id, propertyId).subscribe(removePropertyObserver);
+
+    this.service.confirm('Please confirm..', 'Do you really want to remove this property?')
+    .then((confirmed) => {
+      console.log('User confirmed:', confirmed);
+      const removePropertyObserver = {
+        next: () => {
+          // const propertyIndex = this.properties.findIndex(p => p.id === propertyId);
+          // this.properties.splice(propertyIndex, 1);
+          this.router.navigate(['/renter-home']);
+          this.refreshPropertyList();
+        },
+        error: (err: any) => console.log(err)
+      };
+      if (confirmed)
+      {
+        this.service.removeRenterProperty(this.renter.id, propertyId).subscribe(removePropertyObserver);
+      }
+    })
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 
   onSubmit(f: NgForm): void {
@@ -60,8 +77,9 @@ export class RenterHomeComponent implements OnInit {
     console.log(f.valid);
     const addPropertyObserver = {
       next: (x: any) => {
-        this.router.navigate(['renter-home']);
+
         this.refreshPropertyList();
+        this.router.navigate(['renter-home']);
       },
       error: (err: any) => console.log(err)
     };
