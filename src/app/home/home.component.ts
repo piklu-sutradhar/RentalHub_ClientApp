@@ -13,11 +13,11 @@ export class HomeComponent implements OnInit {
   constructor(public service: SharedService, private modalService: NgbModal, public router: Router) { }
 
   ngOnInit(): void {
-    if (this.service.isRenter())
+    if (this.service.loggedIn() && this.service.isRenter())
     {
       this.router.navigate(['/renter-home']);
     }
-    else if(this.service.loggedIn())
+    else if (this.service.loggedIn())
     {
       this.refreshPropertyList();
     }
