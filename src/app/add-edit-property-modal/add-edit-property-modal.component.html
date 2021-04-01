@@ -1,0 +1,98 @@
+
+  <div class="modal-header text-center pt-3">
+    <h1 class="text-center modal-title" id="modal-basic-title">{{ modalTitle }}</h1>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    <div >
+      <div class="shadow round p-3 registrationForm modal-body">
+        <form #f='ngForm' (ngSubmit)='onSubmit(f)'>
+          <div>
+            <h2>Info</h2>
+          </div>
+          <div class="form-group">
+            <label for="registerTitle" class="form-label">Title<span style="color: red;" *ngIf = "title.invalid">*</span></label>
+            <input type="text" name="title" [(ngModel)]="property!.title" required pattern='^[A-Za-z0-9 _]+$' #title='ngModel' class="form-control" id="registerTitle"
+              placeholder="Enter Last Name">
+              <small *ngIf="title.invalid && title.touched" class="text-danger">Title is Required</small>
+          </div>
+          <div class="from-group pb-3">
+            <label for="type" class="form-label">Property Type<span style="color: red;" *ngIf = "type.invalid">*</span></label>
+            <select  type="type" name="type" [(ngModel)]="property!.propertyType" required #type='ngModel' class="form-control"
+            id="type">
+              <option value="" disabled>Select Property Type:</option>
+              <option *ngFor="let type of types" [ngValue]="type" value="type">{{type}}</option>
+              <small *ngIf="type.invalid" class="text-danger">Property Type is Required</small>
+           </select>
+          </div>
+          <div class="form-group">
+            <label for="bedRooms" class="form-label">How many Bedrooms?<span style="color: red;" *ngIf = "bedRooms.invalid">*</span></label>
+            <input type="number" min="1" max="5" name="bedRooms" [(ngModel)]="property!.bedRooms" required pattern='^[0-9]+$' #bedRooms='ngModel' class="form-control" id="registerBedRooms"
+              placeholder="Enter bedroom numbers">
+              <small *ngIf="bedRooms.invalid && bedRooms.touched" class="text-danger">Number of bedrooms is Required</small>
+          </div>
+
+          <div class="form-group">
+            <label for="baths" class="form-label">How many Baths?<span style="color: red;" *ngIf = "baths.invalid">*</span></label>
+            <input type="number" min="1" max="5" name="baths" [(ngModel)]="property!.baths" required pattern='^[0-9]+$' #baths='ngModel' class="form-control" id="registerbaths"
+              placeholder="Enter baths numbers">
+              <small *ngIf="baths.invalid && baths.touched" class="text-danger">Number of baths is Required</small>
+          </div>
+          <div class="from-group pb-3">
+            <label for="available" class="form-label">Is it Available?<span style="color: red;" *ngIf = "available.invalid">*</span></label>
+            <select  type="boolen" name="available" [(ngModel)]="property!.available" required #available='ngModel' class="form-control"
+            id="available">
+              <option value="" disabled>Availability</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+              <small *ngIf="available.invalid" class="text-danger">Availability is Required</small>
+           </select>
+          </div>
+
+          <div>
+            <h2>Address</h2>
+          </div>
+
+          <div class="form-group">
+            <label for="addressLine1" class="form-label">Road Address<span style="color: red;" *ngIf = "addressLine1.invalid">*</span></label>
+            <input type="text" name="addressLine1" [(ngModel)]="property!.address!.addressLine1" required pattern='^[a-zA-Z0-9 _-]+$' #addressLine1='ngModel' class="form-control" id="registeraddressLine1"
+              placeholder="Enter Road Address">
+              <small *ngIf="addressLine1.invalid && addressLine1.touched" class="text-danger">Road Address is Required</small>
+          </div>
+          <div class="form-group">
+            <label for="addressLine2" class="form-label">Apt/Suit</label>
+            <input type="text" name="addressLine2" [(ngModel)]="property!.address!.addressLine2" pattern='^[a-zA-Z0-9 _-]+$' #addressLine2='ngModel' class="form-control" id="registeraddressLine2"
+              placeholder="Enter Apt/Suit Number">
+          </div>
+
+          <div class="form-group">
+            <label for="city" class="form-label">City<span style="color: red;" *ngIf = "city.invalid">*</span></label>
+            <input type="text" name="city" [(ngModel)]="property!.address!.city" required pattern='^[a-zA-Z]+$' #city='ngModel' class="form-control" id="registercity"
+              placeholder="Enter Your City">
+              <small *ngIf="city.invalid && city.touched" class="text-danger">City is Required</small>
+          </div>
+          <div class="form-group">
+            <label for="province" class="form-label">Province<span style="color: red;" *ngIf = "province.invalid">*</span></label>
+            <input type="text" name="province" [(ngModel)]="property!.address!.province" required pattern='^[a-zA-Z]+$' #province='ngModel' class="form-control" id="registerprovince"
+              placeholder="Enter Your Province">
+              <small *ngIf="province.invalid && province.touched" class="text-danger">Province is Required</small>
+          </div>
+
+
+          <div class="form-group">
+            <label for="country" class="form-label">Country<span style="color: red;" *ngIf = "country.invalid">*</span></label>
+            <input type="text" name="country" [(ngModel)]="property!.address!.country" required pattern='^[a-zA-Z]+$' #country='ngModel' class="form-control" id="registercountry"
+              placeholder="Enter Your Country">
+              <small *ngIf="country.invalid && country.touched" class="text-danger">Country is Required</small>
+          </div>
+          <div class="form-group">
+            <label for="postalCode" class="form-label">Postal Code<span style="color: red;" *ngIf = "postalCode.invalid">*</span></label>
+            <input type="text" name="postalCode" [(ngModel)]="property!.address!.postalCode" required pattern='^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$' #postalCode='ngModel' class="form-control" id="registerpostalCode"
+              placeholder="Enter postalCode">
+              <small *ngIf="postalCode.invalid && postalCode.touched" class="text-danger">Postal Code is Required</small>
+          </div>
+          <button type="submit" mat-flat-button [disabled]="f.invalid" (click)="close()" class="add-button">{{btnOkText}}</button>
+        </form>
+      </div>
+    </div>

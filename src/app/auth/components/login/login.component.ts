@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
         console.log('Logged in successfully'),
         this.router.navigate(['/home']);
       },
-      error: (err: any) => console.log(err)
+      error: (err: any) => console.log(err),
+      complete: () => {}
     };
     this.service.login(f.value).subscribe(loginObserver);
   }

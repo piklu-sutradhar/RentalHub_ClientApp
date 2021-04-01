@@ -17,29 +17,46 @@
   </div>
 </div>
 
-<div *ngIf='service.loggedIn() && service.isRenter();' >
-  <div class="container mb-2  property-list-title card p-3">
-    <h1>These have {{properties?.length}} protperties:</h1>
-  </div>
-  <div class="parent" layout="column" *ngFor="let property of properties" flex>
-    <mat-card class="md-padding property-card" layout="row" flex>
-        <mat-card-title>
-            {{property.title}}
-        </mat-card-title>
-        <mat-card-content>
-            This property has {{property.bedRooms}} bedrooms and {{property.baths}} bathrooms.
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button mat-fab color="warn" class="remove-property-button" (click) = 'removeProperty(property.id)'><mat-icon>delete</mat-icon></button>
-          <!--button mat-fab color="primary" class="edit-property-button" (click) = 'editProperty(property.id)'><mat-icon>delete</mat-icon></!--button-->
-        </mat-card-actions>
-    </mat-card>
-  </div>
-  <button  mat-flat-button class="add-property-button" (click)="openModal(content)">Add Property</button>
-</div>
+  <mat-accordion *ngIf='service.loggedIn() && service.isRenter();' class="property-list-title"  style="color: azure;">
+    <mat-expansion-panel (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false">
+      <mat-expansion-panel-header class="container mb-2  card p-3" style="color: azure;">
+        <mat-panel-title style="color: azure">
+          You have {{properties?.length}} protperties:
+        </mat-panel-title>
+        <mat-panel-description style="color: azure">
+          {{panelOpenState ? 'Hide properties' : 'Show properties'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-card *ngFor="let property of properties" class="md-padding property-card" layout="row" flex hideToggle>
+            <mat-card-title>
+                {{property.title}}
+            </mat-card-title>
+            <mat-card-content>
+                This property has {{property.bedRooms}} bedrooms and {{property.baths}} bathrooms.
+            </mat-card-content>
+
+            <mat-card-subtitle class="text-white"><h2>Address</h2></mat-card-subtitle>
+            <mat-card-content>
+              <p>Road: {{property?.address?.addressLine1}}</p>
+              <p>Apt/Unit: {{property?.address?.addressLine2}}</p>
+              <p>City: {{property?.address?.city}}</p>
+              <p>Province: {{property?.address?.province}}</p>
+              <p>Country: {{property?.address?.country}}</p>
+              <p>Postal Code: {{property?.address?.postalCode}}</p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-fab color="warn" class="remove-property-button" (click) = 'removeProperty(property.id)'><mat-icon>delete</mat-icon></button>
+              <button mat-fab color="primary" class="edit-property-button" (click) = "openModal('Edit', property.id)"><mat-icon>edit</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-expansion-panel>
+    </mat-accordion>
+  <button  mat-flat-button class="add-property-button mt-3" (click)="openModal('Add')">Add Property</button>
 
 
-<ng-template #content let-modal class="add-property-modal mt-5">
+
+<!--ng-template-- #content let-modal class="add-property-modal mt-5">
   <div class="modal-header text-center pt-3">
     <h1 class="text-center modal-title" id="modal-basic-title">Add a new property</h1>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -138,4 +155,4 @@
       </div>
     </div>
 
-</ng-template>
+</ng-template-->

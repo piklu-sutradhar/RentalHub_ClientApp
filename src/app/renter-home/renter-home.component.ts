@@ -1,3 +1,4 @@
+import { Property } from './../../assets/property';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,13 +11,18 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./renter-home.component.scss']
 })
 export class RenterHomeComponent implements OnInit {
+  panelOpenState = false;
   public types = ['Apertment', 'Condo', 'Townhouse', 'House'];
   private userId = '';
   public renter: any;
-  public properties: any[] = [];
-  public propertytoEdit: any;
+  public properties: Property[] = [];
+  public propertytoEdit: Property | undefined;
   constructor(public service: SharedService, private modalService: NgbModal, public router: Router) {
     this.userId = this.service.decodedToken?.nameid;
+    if (this.service.loggedIn() && this.service.isRenter())
+    {
+      this.refreshPropertyList();
+    }
   }
 
   ngOnInit(): void {
@@ -41,15 +47,51 @@ export class RenterHomeComponent implements OnInit {
     this.service.getRenter(this.userId).subscribe(renterObserver);
 
   }
-  openModal(content: any): void {
-    this.modalService.open(content);
+  openModal(actionType: string, propertyId: string = ''): void {
+
+    this.propertytoEdit = this.properties?.filter((p: { id: string; }) => p?.id === propertyId)[0];
+    let title: string;
+    if (actionType.toLowerCase() === 'add')
+    {
+      title = 'Add a new property';
+    }
+    else if (actionType.toLowerCase() === 'edit')
+    {
+      title = 'Edit this property';
+    }
+    else{
+      title = '';
+    }
+
+    this.service.addOrEditpropertyModal(title, this.renter?.id, this.propertytoEdit, actionType)
+    .then((confirmed) => {
+      console.log('User confirmed:', confirmed);
+      const addPropertyObserver = {
+        next: () => {
+          // const propertyIndex = this.properties.findIndex(p => p.id === propertyId);
+          // this.properties.splice(propertyIndex, 1);
+          this.router.navigate(['/renter-home']);
+          this.refreshPropertyList();
+        },
+        error: (err: any) => console.log(err)
+      };
+      if (confirmed)
+      {
+        // this.service.removeRenterProperty(this.renter.id, propertyId).subscribe(removePropertyObserver);
+        console.log('confirmed');
+      }
+    })
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 
   openEditModal(content: any, propertyId: string): void {
-    this.propertytoEdit = this.properties.filter((p: { Id: string; }) => p?.Id === propertyId);
+    this.propertytoEdit = this.properties.filter((p: { id: string; }) => p?.id === propertyId)[0];
     this.modalService.open(content);
   }
 
+  editProperty(propertyId: string): void {
+    console.log('Edit works');
+  }
   removeProperty(propertyId: string): void {
 
     this.service.confirm('Please confirm..', 'Do you really want to remove this property?')
