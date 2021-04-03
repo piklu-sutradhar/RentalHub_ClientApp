@@ -1,3 +1,4 @@
+import { ModalService } from './../modal.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from './../shared.service';
@@ -12,7 +13,7 @@ import { NgForm } from '@angular/forms';
 export class UserProfileComponent implements OnInit {
 
   public profile: Profile | undefined;
-  constructor(public service: SharedService, private modalService: NgbModal, private router: Router) { }
+  constructor(public service: SharedService, public modalService: ModalService, private router: Router) { }
 
   ngOnInit(): void {
     if (!this.service.loggedIn()){
@@ -29,12 +30,10 @@ export class UserProfileComponent implements OnInit {
       // console.log(this.propertiesToRent);
     }, error => console.error(error));
   }
-  openModal(content: any): void {
-    this.modalService.open(content);
-  }
+
 
   deleteProfile(): void {
-    this.service.confirm('Please confirm..', 'Are you sure to delete your profile?')
+    this.modalService.confirm('Please confirm..', 'Are you sure to delete your profile?')
     .then((confirmed) => {
       console.log('User confirmed:', confirmed);
       const deleteObserver = {

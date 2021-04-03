@@ -29,7 +29,7 @@ export class SharedService {
   userName: null;
   role: null;
 
-  constructor(private http: HttpClient, private router: Router, private modalService: NgbModal) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getCountry(): string[] {
     return countries;
@@ -37,58 +37,6 @@ export class SharedService {
 
   getPropertyList(): Observable<any[]> {
     return this.http.get<any>(this.BaseURL + 'properties', httpOptions);
-  }
-
-  public addOrEditpropertyModal(
-    modalTitle: string,
-    renterId: string,
-    property: Property,
-    actionType: string = 'Add',
-    btnOkText: string = actionType + ' Property',
-  ): Promise<boolean> {
-    const modalRef = this.modalService.open(AddEditPropertyModalComponent);
-    if (property === undefined)
-    {
-      property = {
-        title: '',
-        id: '',
-        propertyType: PropertyType.Apertment,
-        bedRooms: 1,
-        baths: 1,
-        available: true,
-        address: {
-          id : '',
-          addressLine1: '',
-          addressLine2: '',
-          city: '',
-          province: '',
-          country: '',
-          postalCode: '',
-      }
-
-      };
-    }
-    modalRef.componentInstance.modalTitle = modalTitle;
-    modalRef.componentInstance.renterId = renterId;
-    modalRef.componentInstance.property = property;
-    modalRef.componentInstance.btnOkText = btnOkText;
-
-    return modalRef.result;
-  }
-
-  public confirm(
-    title: string,
-    message: string,
-    btnOkText: string = 'OK',
-    btnCancelText: string = 'Cancel',
-    dialogSize: 'sm'|'lg' = 'sm'): Promise<boolean> {
-    const modalRef = this.modalService.open(ConfirmationDialogComponent, { size: dialogSize });
-    modalRef.componentInstance.title = title;
-    modalRef.componentInstance.message = message;
-    modalRef.componentInstance.btnOkText = btnOkText;
-    modalRef.componentInstance.btnCancelText = btnCancelText;
-
-    return modalRef.result;
   }
   getRenter(userId: string): Observable<any[]> {
     return this.http.get<any>(this.BaseURL + 'renters/' + userId, httpOptions);

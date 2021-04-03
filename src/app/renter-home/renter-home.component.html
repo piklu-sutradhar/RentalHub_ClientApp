@@ -17,10 +17,10 @@
   </div>
 </div>
 
-  <mat-accordion *ngIf='service.loggedIn() && service.isRenter();' class="property-list-title"  style="color: azure;">
+  <mat-accordion *ngIf='service.loggedIn() && service.isRenter();'>
     <mat-expansion-panel (opened)="panelOpenState = true"
     (closed)="panelOpenState = false">
-      <mat-expansion-panel-header class="container mb-2  card p-3" style="color: azure;">
+      <mat-expansion-panel-header>
         <mat-panel-title style="color: azure">
           You have {{properties?.length}} protperties:
         </mat-panel-title>
@@ -28,7 +28,7 @@
           {{panelOpenState ? 'Hide properties' : 'Show properties'}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-card *ngFor="let property of properties" class="md-padding property-card" layout="row" flex hideToggle>
+      <mat-card *ngFor="let property of properties" class="md-padding property-card mt-3" layout="row" flex hideToggle>
             <mat-card-title>
                 {{property.title}}
             </mat-card-title>

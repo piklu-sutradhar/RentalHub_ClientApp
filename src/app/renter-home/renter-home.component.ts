@@ -1,3 +1,4 @@
+import { ModalService } from './../modal.service';
 import { Property } from './../../assets/property';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -17,7 +18,7 @@ export class RenterHomeComponent implements OnInit {
   public renter: any;
   public properties: Property[] = [];
   public propertytoEdit: Property | undefined;
-  constructor(public service: SharedService, private modalService: NgbModal, public router: Router) {
+  constructor(public service: SharedService, private modalService: ModalService, public router: Router) {
     this.userId = this.service.decodedToken?.nameid;
     if (this.service.loggedIn() && this.service.isRenter())
     {
@@ -63,7 +64,7 @@ export class RenterHomeComponent implements OnInit {
       title = '';
     }
 
-    this.service.addOrEditpropertyModal(title, this.renter?.id, this.propertytoEdit, actionType)
+    this.modalService.addOrEditpropertyModal(title, this.renter?.id, this.propertytoEdit, actionType)
     .then((confirmed) => {
       console.log('User confirmed:', confirmed);
       const addPropertyObserver = {
@@ -84,17 +85,17 @@ export class RenterHomeComponent implements OnInit {
     .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 
-  openEditModal(content: any, propertyId: string): void {
+  /*openEditModal(content: any, propertyId: string): void {
     this.propertytoEdit = this.properties.filter((p: { id: string; }) => p?.id === propertyId)[0];
     this.modalService.open(content);
-  }
+  }*/
 
   editProperty(propertyId: string): void {
     console.log('Edit works');
   }
   removeProperty(propertyId: string): void {
 
-    this.service.confirm('Please confirm..', 'Do you really want to remove this property?')
+    this.modalService.confirm('Please confirm..', 'Do you really want to remove this property?')
     .then((confirmed) => {
       console.log('User confirmed:', confirmed);
       const removePropertyObserver = {

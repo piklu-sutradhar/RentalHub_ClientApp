@@ -23,7 +23,7 @@
     </div>
 
     <mat-card-actions class="space-between text-center">
-      <button mat-raised-button color="primary" (click)="openModal(content)" class="profile-edit-button">Edit Profile <i class="fa fa-edit"></i></button>
+      <button mat-raised-button color="primary" (click)="this.modalService.openModal(content)" class="profile-edit-button">Edit Profile <i class="fa fa-edit"></i></button>
       <button mat-raised-button (click)="deleteProfile()" class="profile-delete-button"> Delete Profile <i class="fa fa-trash"></i></button>
     </mat-card-actions>
 </mat-card>
